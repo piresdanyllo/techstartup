@@ -1,0 +1,75 @@
+<app-header></app-header>
+<div class="funcionarios-container">
+  <h1 class="text-center">Funcionarios Inativos</h1>
+  <div class="pesquisa-botao-container">
+    <div class="pesquisa-container">
+      <div class='pesquisa-icone'>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+          class="bi bi-search" viewBox="0 0 16 16">
+          <path
+            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+        </svg>
+      </div>
+      <input type="text" class="form-control pesquisa" [(ngModel)]="filter" autocomplete="off"
+        placeholder="Pesquise por Nome, Cidade">
+    </div>
+  </div>
+  <div class="cards-container">
+    <div class="row">
+      <div class="col-lg-4 my-4" *ngFor="let funcionario of funcionarios">
+        <div class="card">
+          <img
+            src="../../../../assets/img/pngtree-hand-drawn-playing-computer-boy-cartoon-character-design-paintedillustrationcartoon-charactersplaying-computerboyotakucomputer-png-image_679340-removebg-preview.png"
+            class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title text-center">{{funcionario.nome_funcionario}}</h5>
+            <h5 class="card-title text-center my-3">{{funcionario.cidade_funcionario}}</h5>
+            <div class="card-icons">
+              <i class="fa-solid fa-user-plus" (click)="modalParaEditar(funcionario.id_funcionario)"></i>
+              <i class="fa-solid fa-trash-can" (click)="modalParaDeletar(funcionario)"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="modalEditar">
+    <div class="minha-modal-editar">
+      <div>
+        <h5 class="text-modal title-modal">Atribuir cargo</h5>
+      </div>
+      <form autocomplete="off">
+        <div class="label-float">
+          <input type="text" placeholder=" " [(ngModel)]="funcionario.nome_funcionario" name="nome_funcionario" readonly>
+          <label>Nome</label>
+        </div>
+        <div class="label-float my-3">
+          <input type="text" placeholder=" " [(ngModel)]="funcionario.cidade_funcionario" name="cidade_funcionario" readonly>
+          <label>Cidade</label>
+        </div>
+        <div class="select-container">
+          <label>Cargo</label>
+          <select [(ngModel)]="cargoEscolhido" name="cargoEscolhido" id="">
+            <option [ngValue]="null" disabled>Selecione</option>
+            <option *ngFor="let cargo of cargos" [ngValue]="cargo.id_cargo">{{cargo.nome_cargo}} {{cargo.nivel_cargo}}</option>
+          </select>
+        </div>
+      </form>
+      <h6 class="my-4 text-modal">Tem certeza que deseja cadastrar?</h6>
+      <button class="btn-modal btn-cancelar" (click)="cancelarEditar()">Cancelar</button>
+      <button class="btn-modal btn-cor-modal" (click)="ativarFuncionario()">Confirmar</button>
+    </div>
+  </div>
+  <div *ngIf="modalDeletar">
+    <div class="minha-modal-deletar">
+      <div>
+        <h5 class="text-modal title-modal">Deletar</h5>
+      </div>
+      <h6 class="my-4 text-modal">Cargo: {{nomeFuncionario}}</h6>
+      <h6 class="my-4 text-modal">Nível: {{cidadeFuncionario}}</h6>
+      <h6 class="my-4 text-modal">Tem certeza que deseja deletar?</h6>
+      <button class="btn-modal btn-cancelar" (click)="cancelarDelete()">Cancelar</button>
+      <button class="btn-modal btn-cor-modal" (click)="deletarFuncionario()">Confirmar</button>
+    </div>
+  </div>
+</div>

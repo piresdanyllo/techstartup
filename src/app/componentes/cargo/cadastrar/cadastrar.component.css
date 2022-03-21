@@ -1,0 +1,60 @@
+.cadastro-container {
+  background-color: #dad5d5;
+  width: 100%;
+  height: 90vh;
+  overflow-x: hidden;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.label-float {
+  position: relative;
+  padding-top: 13px;
+}
+
+.label-float input {
+  background-color: #dad5d5;
+  border: 0;
+  border-bottom: 2px solid #000;
+  outline: none;
+  width: 300px;
+  font-size: 16px;
+  transition: all .3s ease-out;
+  -webkit-transition: all .3s ease-out;
+  -moz-transition: all .3s ease-out;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+.label-float input:focus {
+  border-bottom: 2px solid #000;
+}
+
+.label-float input::placeholder {
+  color: transparent;
+}
+
+.label-float label {
+  color: #000;
+  font-weight: 600;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 13px;
+  transition: all .3s ease-out;
+  -webkit-transition: all .3s ease-out;
+  -moz-transition: all .3s ease-out;
+}
+
+.label-float input:focus+label,
+.label-float input:not(:placeholder-shown)+label {
+  font-size: 13px;
+  margin-top: 0;
+  color: #000;
+}

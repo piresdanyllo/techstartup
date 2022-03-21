@@ -1,0 +1,20 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Editar Cargo</h5>
+    <form>
+      <div class="mb-3">
+        <label class="form-label">Descrição do cargo</label>
+        <input type="text" class="form-control" [(ngModel)]="cargo.nivel_cargo" name="descricao_cargo">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Nome da cargo</label>
+        <input type="text" class="form-control"  [(ngModel)]="cargo.nome_cargo" name="nome_cargo">
+      </div>
+      <button (click)="editarCargo()" class="btn btn-danger">Editar</button>
+      <button class="btn btn-secondary mx-3" routerLink="/turmas">Cancelar</button>
+    </form>
+  </div>
+</div>
+
+
+

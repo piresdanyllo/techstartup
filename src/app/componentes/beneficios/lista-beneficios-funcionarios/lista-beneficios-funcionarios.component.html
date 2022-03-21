@@ -1,0 +1,89 @@
+<app-header></app-header>
+<div class="beneficios-container">
+  <h1 class="text-center">Benefícios - {{nomeFuncionario}} </h1>
+  <div class="pesquisa-botao-container">
+    <div class="pesquisa-container">
+      <div class='pesquisa-icone'>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+          class="bi bi-search" viewBox="0 0 16 16">
+          <path
+            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+        </svg>
+      </div>
+      <input type="text" class="form-control pesquisa" [(ngModel)]="filter" autocomplete="off"
+        placeholder="Pesquise por Benefício, Valor">
+    </div>
+    <button class="btn" (click)="modalParaCadastrar()">Cadastrar</button>
+  </div>
+  <div class="cards-container">
+    <div class="row">
+      <div class="col-lg-4 my-4" *ngFor="let beneficio of beneficios | filter: filter">
+        <div class="card">
+          <img
+            src="../../../../assets/img/12-120167_collection-of-benefits-high-quality-free-employee-benefits-removebg-preview.png"
+            class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title text-center">{{beneficio.nomeBeneficio}}</h5>
+            <h5 class="card-title text-center my-3" >R$ {{beneficio.valorBeneficio}}</h5>
+            <div class="card-icons">
+              <i class="fa-solid fa-pen" (click)="modalParaEditar(beneficio.codigo)"></i>
+              <i class="fa-solid fa-trash-can" (click)="modalParaDeletar(beneficio.codigo)"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="modalCadastrar">
+    <div class="minha-modal-cadastrar">
+      <div>
+        <h5 class="text-modal title-modal">Cadastrar novo benefício</h5>
+      </div>
+      <form autocomplete="off" #f="ngForm">
+        <div class="label-float">
+          <input type="text" placeholder=" " ngModel #formNome="ngModel" [(ngModel)]="beneficio.nomeBeneficio" name="nomeBeneficio" required>
+          <label>Benefício</label>
+        </div>
+        <div class="label-float my-3">
+          <input type="text" placeholder=" " ngModel #formValor="ngModel" [(ngModel)]="beneficio.valorBeneficio" name="valorBeneficio" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left'}" required>
+          <label>Valor</label>
+        </div>
+      </form>
+      <h6 class="my-4 text-modal">Tem certeza que deseja cadastrar?</h6>
+      <button class="btn-modal btn-cancelar" (click)="cancelarCadastro()">Cancelar</button>
+      <button class="btn-modal btn-cor-modal" (click)="cadastrarBeneficio()" [disabled]="f.invalid">Confirmar</button>
+    </div>
+  </div>
+  <div *ngIf="modalEditar">
+    <div class="minha-modal-editar">
+      <div>
+        <h5 class="text-modal title-modal">Editar benefício</h5>
+      </div>
+      <form>
+        <div class="label-float">
+          <input type="text" placeholder=" " [(ngModel)]="beneficio.nomeBeneficio" name="nome_funcionario">
+          <label>Benefício</label>
+        </div>
+        <div class="label-float my-3">
+          <input type="text" placeholder=" " [(ngModel)]="beneficio.valorBeneficio" name="cidade_funcionario" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left'}">
+          <label>Valor</label>
+        </div>
+      </form>
+      <h6 class="my-4 text-modal">Tem certeza que deseja editar?</h6>
+      <button class="btn-modal btn-cancelar" (click)="cancelarEditar()">Cancelar</button>
+      <button class="btn-modal btn-cor-modal" (click)="editarBeneficio()">Confirmar</button>
+    </div>
+  </div>
+  <div *ngIf="modalDeletar">
+    <div class="minha-modal-deletar">
+      <div>
+        <h5 class="text-modal title-modal">Deletar</h5>
+      </div>
+      <h6 class="my-4 text-modal">{{nomeBeneficio}}</h6>
+      <h6 class="my-4 text-modal">R$ {{valorBeneficio}}</h6>
+      <h6 class="my-4 text-modal">Tem certeza que deseja deletar?</h6>
+      <button class="btn-modal btn-cancelar" (click)="cancelarDelete()">Cancelar</button>
+      <button class="btn-modal btn-cor-modal" (click)="deletarBeneficio()">Confirmar</button>
+    </div>
+  </div>
+</div>

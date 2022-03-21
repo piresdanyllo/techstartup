@@ -1,0 +1,91 @@
+<app-header></app-header>
+<div class="cargos-container">
+  <h1 class="text-center">Cargos</h1>
+  <div class="pesquisa-botao-container">
+    <div class="pesquisa-container">
+      <div class='pesquisa-icone'>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+          class="bi bi-search" viewBox="0 0 16 16">
+          <path
+            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+        </svg>
+      </div>
+      <input type="text" class="form-control pesquisa" [(ngModel)]="filter" autocomplete="off"
+        placeholder="Pesquise por Cargo, Nível">
+    </div>
+    <button class="btn" (click)="modalParaCadastrar()">Cadastrar</button>
+  </div>
+  <div class="cards-container">
+    <div class="row">
+      <div class="col-lg-4 my-4" *ngFor="let cargo of cargos | filter: filter">
+        <div class="card">
+          <img src="../../../../assets/img/2794340-cartoon-isolated-object-lapton-computer-vetor-removebg-preview.png"
+            class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title text-center">{{cargo.nome_cargo}}</h5>
+            <h5 class="card-title text-center my-3">{{cargo.nivel_cargo}}</h5>
+            <div class="card-icons">
+              <i class="fa-solid fa-list" routerLink="/cargo/lista-funcionarios/{{cargo.id_cargo}}"></i>
+              <i class="fa-solid fa-pen" (click)="modalParaEditar(cargo)"></i>
+              <i class="fa-solid fa-trash-can" (click)="modalParaDeletar(cargo)"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="modalCadastrar">
+    <div class="minha-modal-cadastrar">
+      <div>
+        <h5 class="text-modal title-modal">Cadastrar novo cargo</h5>
+      </div>
+      <form autocomplete="off" #f="ngForm">
+        <div class="label-float">
+          <input type="text" placeholder=" " ngModel #formNome="ngModel" [(ngModel)]="cargo.nome_cargo" name="nome_cargo" required minlength="3"
+          pattern="^(?!À-Ö)[A-Za-z\',\-àáâãçèéêẽíôõóúû ]*$">
+          <label>Nome</label>
+        </div>
+        <div class="label-float my-3">
+          <input type="text" placeholder=" " ngModel #formNivel="ngModel" [(ngModel)]="cargo.nivel_cargo" name="nivel_cargo" required>
+          <label>Nível</label>
+        </div>
+      </form>
+      <h6 class="my-4 text-modal">Tem certeza que deseja cadastrar?</h6>
+      <button class="btn-modal btn-cancelar" (click)="cancelarCadastro()">Cancelar</button>
+      <button class="btn-modal btn-cor-modal" (click)="cadastrarCargo()" [disabled]="f.invalid">Confirmar</button>
+    </div>
+  </div>
+  <div *ngIf="modalDeletar">
+    <div class="minha-modal-deletar">
+      <div>
+        <h5 class="text-modal title-modal">Deletar</h5>
+      </div>
+      <h6 class="my-4 text-modal">Cargo: {{nomeCargo}}</h6>
+      <h6 class="my-4 text-modal">Nível: {{nivelCargo}}</h6>
+      <h6 class="my-4 text-modal">Tem certeza que deseja deletar?</h6>
+      <button class="btn-modal btn-cancelar" (click)="cancelarDelete()">Cancelar</button>
+      <button class="btn-modal btn-cor-modal" (click)="deletarCargo()">Confirmar</button>
+    </div>
+  </div>
+  <div *ngIf="modalEditar">
+    <div class="minha-modal-cadastrar">
+      <div>
+        <h5 class="text-modal title-modal">Editar cargo</h5>
+      </div>
+      <form>
+        <div class="label-float">
+          <input type="text" placeholder=" " ngModel #formNome="ngModel" [(ngModel)]="cargo.nome_cargo" name="nome_cargo" required minlength="3"
+          pattern="^(?!À-Ö)[A-Za-z\',\-àáâãçèéêẽíôõóúû ]*$">
+          <label>Nome</label>
+        </div>
+        <div class="label-float my-3">
+          <input type="text" placeholder=" " ngModel #formNome="ngModel" [(ngModel)]="cargo.nivel_cargo" name="nivel_cargo" required>
+          <label>Nível</label>
+        </div>
+      </form>
+      <h6 class="my-4 text-modal">Tem certeza que deseja editar?</h6>
+      <button class="btn-modal btn-cancelar" (click)="cancelarEditar()">Cancelar</button>
+      <button class="btn-modal btn-cor-modal" (click)="editarCargo()" [disabled]="formNome.invalid">Confirmar</button>
+    </div>
+  </div>
+</div>
